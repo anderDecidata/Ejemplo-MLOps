@@ -60,4 +60,3 @@ resultados_grid = grid_search_forecaster(
 ultima_fecha_entrenamiento = datos_test.index[-1].strftime('%Y-%m-%d %H:%M:%S')
 pickle.dump(ultima_fecha_entrenamiento, open('ultima_fecha_entrenamiento.pickle', 'wb'))
 pickle.dump(forecaster_rf, open(path_modelo, 'wb'))
-

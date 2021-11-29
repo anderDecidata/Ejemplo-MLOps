@@ -14,3 +14,4 @@ def create_predictors(y):
     X_train = X_train.drop(columns='y').tail(1).to_numpy()  
     
     return X_train  
+    

@@ -26,7 +26,6 @@ query = engine.execute('SELECT MIN(fecha_prediccion), MAX(fecha_prediccion) FROM
 fecha_prediccion = query.fetchall()[0]
 query.close()
 
-
 primera_fecha_prediccion = fecha_prediccion[0]
 ultima_fecha_prediccion = fecha_prediccion[1]
 

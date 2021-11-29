@@ -31,8 +31,7 @@ m1.metric(label ='Nº transac. medias',value = str(round(datos['realidad'].mean(
 m1.metric(label ='Nº transac. medias pred',value = str(round(datos['prediccion'].mean(), 2)))
 m2.metric(label ='Error Medio (MAE)',value = str(round(datos['MAE'].mean(), 2)))
 
-
 # Creo el gráfico
-fig = px.line(datos, x='fecha_prediccion', y="MAE")
+fig1 = px.line(datos, x='fecha_prediccion', y="MAE")
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig1, use_container_width=True)

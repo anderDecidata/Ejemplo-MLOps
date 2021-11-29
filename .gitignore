@@ -138,6 +138,5 @@ secrets.py
 create_ddbb.py
 bitcoin.csv
 prueba.py
-*.ipynb
 ddbb_secrets.py
 action.yml
