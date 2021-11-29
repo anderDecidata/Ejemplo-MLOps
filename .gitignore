@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Virtualenv
+mlops_example/*
+mlops_example
+
+# Ficheros
+secrets.py
+create_ddbb.py
+bitcoin.csv
+prueba.py
+*.ipynb
+ddbb_secrets.py
+action.yml
