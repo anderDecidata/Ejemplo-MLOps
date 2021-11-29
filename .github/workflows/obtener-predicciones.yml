@@ -3,6 +3,7 @@ name: obtener-predicciones
 on:
   schedule:
     - cron: '0 0 * * */3,6' #Cada miércoles y sábado 
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -16,6 +17,10 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.9.7' 
+      
+      - name: Instalo libpq-dev
+        run: sudo apt-get update
+             sudo apt-get install libpq-dev    
           
       - name: Instalo los paquetes necesarios
         run: |
