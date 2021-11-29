@@ -127,6 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
 
 
 # Virtualenv
@@ -141,3 +142,5 @@ prueba.py
 *.ipynb
 ddbb_secrets.py
 action.yml
+=======
+>>>>>>> 5adc36df742d4822b3422018843dcac5bd7a5797
