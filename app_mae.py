@@ -34,4 +34,12 @@ m2.metric(label ='Error Medio (MAE)',value = str(round(datos['MAE'].mean(), 2)))
 # Creo el gráfico
 fig1 = px.line(datos, x='fecha_prediccion', y="MAE")
 
+# Gráfico 2
+datos_com = datos\
+    .drop('MAE', axis = 1)\
+    .melt(id_vars = ('fecha_prediccion'))
+
+fig2 = px.line(datos_com, x='fecha_prediccion', y="value", color = 'variable')
+
 st.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig2, use_container_width=True)
