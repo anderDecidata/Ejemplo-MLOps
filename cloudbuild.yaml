@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/ejemplo-mlops/github.com/anderdecidata/ejemplo-mlops:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/ejemplo-mlops/github.com/anderdecidata/ejemplo-mlops:$SHORT_SHA']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'mlops', '--image=gcr.io/ejemplo-mlops/github.com/anderdecidata/ejemplo-mlops:$SHORT_SHA', '--region=europe-wet1', '--platform=managed']
