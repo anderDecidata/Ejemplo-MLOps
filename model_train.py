@@ -44,12 +44,12 @@ datos_agrupados = datos\
   .reset_index()
 
 # Pongo bien los datos
-datos = datos.set_index('date')
-datos = datos['transactions']
+datos_agrupados = datos_agrupados.set_index('date')
+datos_agrupados = datos_agrupados['transactions']
 
 # Split entre train y test
-datos_train = datos[ -n_datos_entrenar:-steps]
-datos_test  = datos[-steps:]
+datos_train = datos_agrupados[ -n_datos_entrenar:-steps]
+datos_test  = datos_agrupados[-steps:]
 
 # Grid search de hiperparámetros
 forecaster_rf = ForecasterAutoregCustom(
