@@ -12,12 +12,12 @@ jobs:
 
       - name: Analizo el Repo
         uses: actions/checkout@v2 
-
+    
       - name: Configuro Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.9.7' 
-          
+      
       - name: Instalo los paquetes necesarios
         run: |
           python -m pip install --upgrade pip

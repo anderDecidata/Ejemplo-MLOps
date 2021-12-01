@@ -14,3 +14,7 @@ El ejercicio de MLOps consiste en:
     
     2. Disponer de una base de datos que permita incluir la información de predicciones y datos reales para así poder visualizar la evolución de la capacidad predictiva del modelo. Esta visualización se ha creado usando `streamlit` y se encuentra en el fichero `app_mae.py`.
 
+## Funcionamiento
+ Entrena el modelo predictivo ejecutando el fichero `model_train.py`. Esto generará un nuevo modelo entrenado, llamado `model.pickle`. 
+
+ Una vez se haya creado el modelo, haz el push a Github. Automáticamente el modelo se compilará en una API con el script `app.py` el Dockerfile y será publicado en Google Cloud Run. 

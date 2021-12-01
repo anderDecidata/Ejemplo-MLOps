@@ -6,11 +6,30 @@ from utils import create_predictors
 from skforecast.model_selection import grid_search_forecaster
 from skforecast.ForecasterAutoregCustom import ForecasterAutoregCustom
 
+import requests
+import pandas as pd
+from datetime import datetime
 # Datos 
 steps = 36
 n_datos_entrenar = 200
 path_fichero = 'bitcoin.csv'
 path_modelo = 'model.pickle'
+
+# Extraigo la info de Bitcoin
+url = 'https://api.blockchain.info/charts/transactions-per-second?timespan=all&sampled=false&metadata=false&cors=true&format=json'
+resp = requests.get(url)
+
+bitcoin = pd.DataFrame(resp.json()['values'])
+
+# Concierto las fecha UNIX en timestamp
+bitcoin['x'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in bitcoin['x']]
+bitcoin['x'] = pd.to_datetime(bitcoin['x'])
+
+# Doy nombre a las columnas
+bitcoin.columns = ['date', 'transactions']
+
+# Guardo el fichero en csv
+bitcoin.to_csv(path_fichero, index = False)
 
 # Leo los datos
 datos = pd.read_csv(path_fichero)
