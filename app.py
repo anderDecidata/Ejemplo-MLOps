@@ -9,8 +9,9 @@ def forecast(num_predicciones = 168, return_predictions = True):
     import requests
     from datetime import datetime
     from sqlalchemy import create_engine
-    from secrets import uri
     import pickle
+
+    uri = 'postgresql://xivpaemulrhyyw:a9cee126e4c672d609b45b72b6f608cf8f394bf9b317d08dac0831de9046c806@ec2-34-246-155-237.eu-west-1.compute.amazonaws.com:5432/d6jtftdhcp59hv'
 
     # Load Files
     forecaster_rf = pickle.load(open('model.pickle', 'rb'))
