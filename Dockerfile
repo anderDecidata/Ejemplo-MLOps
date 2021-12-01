@@ -2,6 +2,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY app.py .
+COPY utils.py .
 COPY ultima_fecha_entrenamiento.pickle .
 COPY model.pickle .
 EXPOSE 8080
