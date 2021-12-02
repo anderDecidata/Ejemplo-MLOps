@@ -18,3 +18,6 @@ El ejercicio de MLOps consiste en:
  Entrena el modelo predictivo ejecutando el fichero `model_train.py`. Esto generará un nuevo modelo entrenado, llamado `model.pickle`. 
 
  Una vez se haya creado el modelo, haz el push a Github. Automáticamente el modelo se compilará en una API con el script `app.py` el Dockerfile y será publicado en Google Cloud Run. 
+
+ Hola
+ 
