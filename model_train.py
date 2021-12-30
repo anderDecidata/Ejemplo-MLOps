@@ -1,19 +1,32 @@
+# General
 import pandas as pd
 import pickle
-from sklearn.ensemble import RandomForestRegressor
 
+# Entrenamiento de modelo
 from utils import create_predictors
 from skforecast.model_selection import grid_search_forecaster
 from skforecast.ForecasterAutoregCustom import ForecasterAutoregCustom
+from sklearn.ensemble import RandomForestRegressor
 
+# Lectura de Datos
 import requests
 import pandas as pd
 from datetime import datetime
+
+# MLFlow
+import mlflow
+import os 
+from google.cloud import storage
+
+
+
 # Datos 
 steps = 36
 n_datos_entrenar = 200
 path_fichero = 'bitcoin.csv'
 path_modelo = 'model.pickle'
+uri_mlflow = 'http://34.135.222.76:8080/'
+experiment_name = "bictoin_transactions"
 
 # Extraigo la info de Bitcoin
 url = 'https://api.blockchain.info/charts/transactions-per-second?timespan=all&sampled=false&metadata=false&cors=true&format=json'
@@ -75,7 +88,33 @@ resultados_grid = grid_search_forecaster(
                         verbose     = False
                     )
 
-# Guardo el modelo
+# Subo los resultados a MLFlow para hacer tracking de 
+
+service_account = 'service_account.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='service_account.json'
+client = storage.Client
+
+# Me conecto a MLFlow
+mlflow.set_tracking_uri(uri_mlflow)  
+
+# Creo el experimento si no está creado y lo fijo
+if not mlflow.get_experiment_by_name(experiment_name):
+    mlflow.create_experiment(name=experiment_name)
+
+mlflow.set_experiment(experiment_name)
+
+# Haog el log de los parámetros en MLFlow
+for i in range(resultados_grid.shape[0]):
+   with mlflow.start_run():
+      mlflow.log_params(resultados_grid['params'][i] )
+      mlflow.log_metric('mean_squared_error', resultados_grid['metric'][i])
+      
+      # Si coincide con el mejor modelo, hago logging del modelo
+      if resultados_grid['metric'][i] == resultados_grid['metric'].min():
+         fecha = datetime.now().strftime('%Y%m%d%H%M%S')
+         mlflow.sklearn.log_model(resultados_grid, f'{fecha}_autoregressive_forecaster')
+
+# Guardo el modelo en local
 ultima_fecha_entrenamiento = datos_test.index[-1].strftime('%Y-%m-%d %H:%M:%S')
 pickle.dump(ultima_fecha_entrenamiento, open('ultima_fecha_entrenamiento.pickle', 'wb'))
 pickle.dump(forecaster_rf, open(path_modelo, 'wb'))
