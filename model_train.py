@@ -19,13 +19,12 @@ import os
 from google.cloud import storage
 
 
-
 # Datos 
 steps = 36
 n_datos_entrenar = 200
 path_fichero = 'bitcoin.csv'
 path_modelo = 'model.pickle'
-uri_mlflow = 'http://34.135.222.76:8080/'
+uri_mlflow = 'http://104.198.136.57:8080/'
 experiment_name = "bictoin_transactions"
 
 # Extraigo la info de Bitcoin
@@ -72,8 +71,10 @@ forecaster_rf = ForecasterAutoregCustom(
                 )
 
 # Hiperparámetros del regresor
-param_grid = {'n_estimators': [100, 500],
-              'max_depth': [3, 5, 10]}
+param_grid = {
+  'n_estimators': [100, 500],
+  'max_depth': [3, 5, 10]
+}
 
 resultados_grid = grid_search_forecaster(
                         forecaster  = forecaster_rf,
@@ -89,7 +90,6 @@ resultados_grid = grid_search_forecaster(
                     )
 
 # Subo los resultados a MLFlow para hacer tracking de 
-
 service_account = 'service_account.json'
 os.environ['GOOGLE_APPLICATION_CREDENTIALS']='service_account.json'
 client = storage.Client
@@ -106,7 +106,7 @@ mlflow.set_experiment(experiment_name)
 # Haog el log de los parámetros en MLFlow
 for i in range(resultados_grid.shape[0]):
    with mlflow.start_run():
-      mlflow.log_params(resultados_grid['params'][i] )
+      mlflow.log_params(resultados_grid['params'][i])
       mlflow.log_metric('mean_squared_error', resultados_grid['metric'][i])
       
       # Si coincide con el mejor modelo, hago logging del modelo
