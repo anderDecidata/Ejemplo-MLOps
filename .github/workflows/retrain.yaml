@@ -2,6 +2,7 @@ name: retrain-model.
 
 on:
   repository_dispatch : 
+    types: execute-retrain
 
 jobs:
   build:
