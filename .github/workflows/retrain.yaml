@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name 'Ander Fernández'
           git config --global user.email 'afernandez@decidata.es'
-          git add data/*
+          git add *
           git commit -am "Automatically updated model"
           git push 
