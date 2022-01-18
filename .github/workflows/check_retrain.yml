@@ -25,5 +25,6 @@ jobs:
           
       - name: Ejecutar script de python 
         env:
-          URI: ${{secrets.TOKEN}}
+          URI: ${{ secrets.URI }}
+          TOKEN: ${{secrets.TOKEN}}
         run: python check_retrain.py

@@ -3,7 +3,6 @@
 
 import pandas as pd
 from sqlalchemy import create_engine
-from ddbb_secrets import uri
 from datetime import datetime, timedelta
 import requests
 import json
@@ -13,6 +12,7 @@ user = 'anderDecidata'
 repo = 'Ejemplo-MLOps'
 event_type = 'execute-retrain'
 GITHUB_TOKEN = os.environ.get('TOKEN')
+uri = os.environ.get('URI')
 
 # Data
 max_mae = 6
