@@ -109,7 +109,7 @@ smmap==5.0.0
 sniffio==1.2.0
 SQLAlchemy==1.4.27
 sqlparse==0.4.2
-starlette==0.14.2
+starlette==0.16.0
 statsmodels==0.13.1
 streamlit==1.2.0
 tabulate==0.8.9
