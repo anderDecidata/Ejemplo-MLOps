@@ -89,9 +89,10 @@ resultados_grid = grid_search_forecaster(
                         verbose     = False
                     )
 
+"""
 # Subo los resultados a MLFlow para hacer tracking de 
 service_account = 'service_account.json'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']='service_account.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']= 'service_account.json'
 client = storage.Client
 
 # Me conecto a MLFlow
@@ -113,6 +114,7 @@ for i in range(resultados_grid.shape[0]):
       if resultados_grid['metric'][i] == resultados_grid['metric'].min():
          fecha = datetime.now().strftime('%Y%m%d%H%M%S')
          mlflow.sklearn.log_model(resultados_grid, f'{fecha}_autoregressive_forecaster')
+"""
 
 # Guardo el modelo en local
 ultima_fecha_entrenamiento = datos_test.index[-1].strftime('%Y-%m-%d %H:%M:%S')
