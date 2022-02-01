@@ -15,7 +15,7 @@ GITHUB_TOKEN = os.environ.get('TOKEN')
 uri = os.environ.get('URI')
 
 # Data
-max_mae = 5
+max_mae = 6
 n_observations_analyze = 48
 
 # N days to substract
