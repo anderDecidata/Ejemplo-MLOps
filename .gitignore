@@ -142,3 +142,4 @@ ddbb_secrets.py
 action.yml
 service_account.json
 credentials.py
+.neptune

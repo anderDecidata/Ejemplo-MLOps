@@ -13,10 +13,14 @@ import requests
 import pandas as pd
 from datetime import datetime
 
-# MLFlow
-import mlflow
-import os 
-from google.cloud import storage
+# Neptune
+import os
+from dotenv import load_dotenv
+import neptune.new as neptune
+load_dotenv()
+
+NEPTUNE_API_KEY = os.environ.get('NEPTUNE_API_KEY')
+NEPTUNE_PROJECT = os.environ.get('NEPTUNE_PROJECT')
 
 
 # Datos 
@@ -89,32 +93,20 @@ resultados_grid = grid_search_forecaster(
                         verbose     = False
                     )
 
-"""
-# Subo los resultados a MLFlow para hacer tracking de 
-service_account = 'service_account.json'
-os.environ['GOOGLE_APPLICATION_CREDENTIALS']= 'service_account.json'
-client = storage.Client
+print('Uploading runs to Neptune')
 
-# Me conecto a MLFlow
-mlflow.set_tracking_uri(uri_mlflow)  
-
-# Creo el experimento si no está creado y lo fijo
-if not mlflow.get_experiment_by_name(experiment_name):
-    mlflow.create_experiment(name=experiment_name)
-
-mlflow.set_experiment(experiment_name)
-
-# Haog el log de los parámetros en MLFlow
 for i in range(resultados_grid.shape[0]):
-   with mlflow.start_run():
-      mlflow.log_params(resultados_grid['params'][i])
-      mlflow.log_metric('mean_squared_error', resultados_grid['metric'][i])
-      
-      # Si coincide con el mejor modelo, hago logging del modelo
-      if resultados_grid['metric'][i] == resultados_grid['metric'].min():
-         fecha = datetime.now().strftime('%Y%m%d%H%M%S')
-         mlflow.sklearn.log_model(resultados_grid, f'{fecha}_autoregressive_forecaster')
-"""
+
+  run = neptune.init(
+      project= NEPTUNE_PROJECT,
+      api_token=NEPTUNE_API_KEY,
+  ) 
+  
+  params = resultados_grid['params'][i]
+  run["parameters"] = params
+  run["mean_squared_error"] = resultados_grid['metric'][i]
+  
+  run.stop()
 
 # Guardo el modelo en local
 ultima_fecha_entrenamiento = datos_test.index[-1].strftime('%Y-%m-%d %H:%M:%S')
