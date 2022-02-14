@@ -2,7 +2,7 @@ name: actualizar-datos-bbdd
 
 on:
   schedule:
-    - cron: '0 0/6 * * *' #Ejecuto cada 6 horas 
+    - cron: '0 0/1 * * *' #Execute very hour 
   workflow_dispatch: 
 
 jobs:
